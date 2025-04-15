@@ -18,7 +18,7 @@ class Program
     
     private static async Task Main()
     {
-        FileResourcesManager.Initialize();
+        ImageLibrary.Initialize();
         
         BotClient = new TelegramBotClient(Token);
         ReceiverOptions = new ReceiverOptions
