@@ -4,8 +4,12 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>DND_Bot</RootNamespace>
-        <ImplicitUsings>enable</ImplicitUsings>
+        <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Telegram.Bot" Version="22.5.0" />
+    </ItemGroup>
 
 </Project>
