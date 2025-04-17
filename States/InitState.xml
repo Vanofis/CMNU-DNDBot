@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MessageState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SubStates>
+    <SubState>
+      <Buttons>
+        <ArrayOfButtonData>
+          <ButtonData>
+            <label>Де я?...</label>
+            <args>
+              <string>ToState|0</string>
+            </args>
+          </ButtonData>
+        </ArrayOfButtonData>
+      </Buttons>
+      <ImagePath>E:\Університет\CMNU-DNDBot\Images\Flashback_2.png</ImagePath>
+      <Message>Світло тьмяне. Біла стеля. Шум апаратів, коротке пищання кардіомонітора. Поступово з чорноти виникає розфокусоване зображення. Він лежить. Дихає важко
+</Message>
+    </SubState>
+  </SubStates>
+  <StateLinks>
+    <StateLink>
+      <TransitionIsAvailable>false</TransitionIsAvailable>
+    </StateLink>
+  </StateLinks>
+  <InitSubStateIndex>0</InitSubStateIndex>
+  <CycleSubStates>false</CycleSubStates>
+</MessageState>

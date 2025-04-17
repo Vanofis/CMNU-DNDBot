@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MessageState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SubStates>
+    <SubState>
+      <Buttons>
+        <ArrayOfButtonData>
+          <ButtonData>
+            <label>…зрозуміло.</label>
+            <args>
+              <string>ToState|1</string>
+            </args>
+          </ButtonData>
+        </ArrayOfButtonData>
+      </Buttons>
+      <Message>Двері відкриваються. У кімнату входить медсестра. Її лице — стомлене, очі глибокі. Вона не посміхається — просто говорить.
+Оля: «Вас привезли п’ять днів тому. Ви були в завалі. Встигли. Ледве. Ногу… не вдалося врятувати. Права. Нижче коліна.
+ Іще діагностовано легкий струс, але загроз життю нема.»
+</Message>
+    </SubState>
+  </SubStates>
+  <StateLinks>
+    <StateLink>
+      <TransitionIsAvailable>false</TransitionIsAvailable>
+    </StateLink>
+  </StateLinks>
+  <InitSubStateIndex>0</InitSubStateIndex>
+  <CycleSubStates>false</CycleSubStates>
+</MessageState>

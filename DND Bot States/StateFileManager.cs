@@ -38,7 +38,7 @@ public static class StateFileManager
     {
         path += ".xml";
         var serializer = new XmlSerializer(typeof(MessageState));
-        using var streamWriter = new StreamWriter(Path.Combine(StateFolderPath, path));
+        using var streamWriter = new StreamWriter(path);
         
         serializer.Serialize(streamWriter, state);
     }
