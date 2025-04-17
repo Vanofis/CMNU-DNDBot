@@ -48,16 +48,21 @@ class Program
         {
             var message = update.Message;
             var chat = message.Chat;
-
-            using var memoryStream = ImageLibrary.GetImage("Logo.png");
-            BotClient.SetChatPhoto(chat.Id, new InputFileStream(memoryStream, "Logo.png"));
-            BotClient.SetMyName("Charity bot");
             
             switch (update.Type)
             {
                 case UpdateType.Message:
+                {
+                    if (message.Text == "/start")
+                    {
+                        StateMachine.SetState(StateFileManager.GetState("InitState.xml"));
+                    }
+                }
                     break;
                 case UpdateType.CallbackQuery:
+                {
+                    
+                }
                     break;
             }
         }

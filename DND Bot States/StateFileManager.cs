@@ -18,7 +18,7 @@ public static class StateFileManager
             directory = directory.Parent;
         }
         
-        StateFolderPath = Path.Combine(directory.Name, "States");
+        StateFolderPath = Path.Combine(directory.FullName, "States");
         
         if (!Directory.Exists(StateFolderPath))
         {
