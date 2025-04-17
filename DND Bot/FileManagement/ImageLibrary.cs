@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace DND_Bot.FileManagement;
 
@@ -10,12 +11,20 @@ public static class ImageLibrary
 
     #region Data    
     
-    public static readonly string PathToImages = Path.Combine(AppContext.BaseDirectory, "Images");
+    public static string PathToImages;
     
     private static Dictionary<Guid, byte[]> Images = new();
     
     public static void Initialize()
     {
+        var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+        while (directory != null && !directory.GetFiles("*.sln").Any())
+        {
+            directory = directory.Parent;
+        }
+        
+        PathToImages = Path.Combine(directory.FullName, "Images");
+        
         if (!Directory.Exists(PathToImages))
         {
             Directory.CreateDirectory(PathToImages);
