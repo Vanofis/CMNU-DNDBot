@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using DND_Bot_States.States;
 
@@ -7,10 +8,18 @@ namespace DND_Bot_States;
 
 public static class StateFileManager
 {
-    public static readonly string StateFolderPath = Path.Combine(AppContext.BaseDirectory, "States");
+    public static string StateFolderPath;
 
     public static void Initialize()
     {
+        var directory = new DirectoryInfo(Directory.GetCurrentDirectory());
+        while (directory != null && !directory.GetFiles("*.sln").Any())
+        {
+            directory = directory.Parent;
+        }
+        
+        StateFolderPath = Path.Combine(directory.Name, "States");
+        
         if (!Directory.Exists(StateFolderPath))
         {
             Directory.CreateDirectory(StateFolderPath);
