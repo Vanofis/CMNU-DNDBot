@@ -10,6 +10,9 @@ public enum ActionType
     ToNextSubState,
     ToPreviousSubState,
     ToState,
+    IncreaseKarma,
+    DecreaseKarma,
+    Finale,
 }
 
 [Serializable]
