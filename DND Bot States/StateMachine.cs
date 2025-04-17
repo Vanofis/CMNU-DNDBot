@@ -5,7 +5,7 @@ namespace DND_Bot_States;
 
 public static class StateMachine
 {
-    private static MessageState CurrentState;
+    public static MessageState CurrentState;
 
     public static void SetState(MessageState newState)
     {

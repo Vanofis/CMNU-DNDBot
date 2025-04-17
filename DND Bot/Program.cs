@@ -56,6 +56,15 @@ class Program
                     if (message.Text == "/start")
                     {
                         StateMachine.SetState(StateFileManager.GetState("InitState.xml"));
+                        string path = StateMachine.CurrentState.SubStates[StateMachine.CurrentState.CurrentSubStateIndex]
+                            .ImagePath;
+                        using var memoryStream = ImageLibrary.GetImage(path);
+                        
+                        await botClient.SendPhoto(
+                            chatId: chat.Id, 
+                            photo: new InputFileStream(memoryStream, path),
+                            caption: StateMachine.CurrentState.SubStates[StateMachine.CurrentState.CurrentSubStateIndex].Message);
+                           
                     }
                 }
                     break;
