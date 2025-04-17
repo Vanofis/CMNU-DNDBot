@@ -10,7 +10,7 @@ public static class ImageLibrary
 
     #region Data    
     
-    private static readonly string PathToImages = Path.Combine(AppContext.BaseDirectory, "Images");
+    public static readonly string PathToImages = Path.Combine(AppContext.BaseDirectory, "Images");
     
     private static Dictionary<Guid, byte[]> Images = new();
     

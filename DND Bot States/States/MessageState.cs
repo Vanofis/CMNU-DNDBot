@@ -1,11 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace DND_Bot_States.States;
 
+public enum ActionType
+{
+    ToNextSubState,
+    ToPreviousSubState,
+    ToState,
+}
+
 [Serializable]
-public class BaseState
+public class MessageState
 {
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -14,7 +22,13 @@ public class BaseState
     [Serializable]
     public struct SubState
     {
-        public string[][] Buttons;
+        public class ButtonData
+        {
+            public string label;
+            public string[] args;
+        }
+        
+        public ButtonData[][] Buttons;
         
         public string ImagePath;
         public string Message;
@@ -26,7 +40,6 @@ public class BaseState
         public bool TransitionIsAvailable;
         
         public string StateName;
-        public string StateType;
         
         public void SwitchToState()
         {
@@ -35,50 +48,29 @@ public class BaseState
                 return;
             }
             
-            var stateType = Type.GetType(StateType);
-
-            if (stateType == null)
-            {
-                throw new NullReferenceException($"State of type {StateType} not found");
-            }
             
-            //StateMachine.SetState(FileResourcesManager.GetState(StateName, stateType));
+            StateMachine.SetState(StateFileManager.GetState(StateName));
         }
     }
     
-    public virtual SubState[] SubStates => default;
-    
-    public virtual StateLink[] StateLinks => default;
-    
-    public virtual int CurrentSubStateIndex { get; protected set; }
-    public virtual int InitSubStateIndex => 0;
-    public virtual bool CycleSubStates => false;
+    public SubState[] SubStates;
+    public StateLink[] StateLinks;
+
+    [XmlIgnore]
+    public int CurrentSubStateIndex = 0;
+    public int InitSubStateIndex = 0;
+    public bool CycleSubStates = false;
 
     #endregion
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
     #region Life cycle
-    
+
     public void Initialize()
     {
         CurrentSubStateIndex = InitSubStateIndex;
-
-        InitializeInternal();
     }
-    protected virtual void InitializeInternal() {}
-
-    public virtual void Update()
-    {
-        UpdateInternal();
-    }
-    protected virtual void UpdateInternal() {}
-
-    public virtual void Dispose()
-    {
-        DisposeInternal();
-    }
-    protected virtual void DisposeInternal() {}
     
     #endregion
     
@@ -126,23 +118,20 @@ public class BaseState
 
 public static class BaseStateExtensions
 {
-    public static ReplyKeyboardMarkup GetMarkup(this List<string[]> buttonNames)
+    public static InlineKeyboardMarkup GetMarkup(this (string buttonName, string args)[][] buttonNames)
     {
-        var keyboardButtons = new List<KeyboardButton[]>();
+        var keyboardButtons = new List<InlineKeyboardButton[]>();
         foreach(var array in buttonNames)
         {
-            var buttonArray = new KeyboardButton[array.Length];
+            var buttonArray = new InlineKeyboardButton[array.Length];
             for (int i = 0; i < array.Length; i++)
             {
-                buttonArray[i] = array[i];
+                buttonArray[i] = new InlineKeyboardButton(array[i].buttonName, array[i].args);
             }
             
             keyboardButtons.Add(buttonArray);
         }
-        
-        return new ReplyKeyboardMarkup(keyboardButtons)
-        {
-            ResizeKeyboard = true,
-        };
+
+        return new InlineKeyboardMarkup(keyboardButtons);
     }
 }

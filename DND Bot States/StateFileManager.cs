@@ -7,18 +7,29 @@ namespace DND_Bot_States;
 
 public static class StateFileManager
 {
-    public static BaseState GetState(string path, Type stateType)
+    public static readonly string StateFolderPath = Path.Combine(AppContext.BaseDirectory, "States");
+
+    public static void Initialize()
     {
-        var serializer = new XmlSerializer(typeof(BaseState));
-        using var streamReader = new StreamReader(path);
-        
-        return (BaseState)serializer.Deserialize(streamReader)!;
+        if (!Directory.Exists(StateFolderPath))
+        {
+            Directory.CreateDirectory(StateFolderPath);
+        }
     }
     
-    public static void SaveState<T>(T state, string path) where T : BaseState
+    public static MessageState GetState(string path)
     {
-        var serializer = new XmlSerializer(typeof(T));
-        using var streamWriter = new StreamWriter(path);
+        var serializer = new XmlSerializer(typeof(MessageState));
+        using var streamReader = new StreamReader(Path.Combine(StateFolderPath, path));
+        
+        return (MessageState)serializer.Deserialize(streamReader)!;
+    }
+    
+    public static void SaveState(this MessageState state, string path)
+    {
+        path += ".xml";
+        var serializer = new XmlSerializer(typeof(MessageState));
+        using var streamWriter = new StreamWriter(Path.Combine(StateFolderPath, path));
         
         serializer.Serialize(streamWriter, state);
     }
