@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using DND_Bot_States;
+using DND_Bot_States.States;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -13,7 +14,7 @@ namespace VadimDNDBot;
 
 class Program
 {
-    private const string Token = "7864956778:AAEoU7oI_La7arjQptpTixrI6RKV-KIKl84";
+    private const string Token = "8170360935:AAEJ_KIME3pofAGSqVtMPEuZk8XIRxBlXfM";
     private static ITelegramBotClient BotClient;
     private static ReceiverOptions ReceiverOptions;
     
@@ -55,7 +56,7 @@ class Program
                 {
                     if (message.Text == "/start")
                     {
-                        StateMachine.SetState(StateFileManager.GetState("InitState.xml"));
+                        StateMachine.SetState(StateFileManager.GetState("NurseHere.xml"));
                         string path = StateMachine.CurrentState.SubStates[StateMachine.CurrentState.CurrentSubStateIndex]
                             .ImagePath;
                         using var memoryStream = ImageLibrary.GetImage(path);
@@ -63,8 +64,10 @@ class Program
                         await botClient.SendPhoto(
                             chatId: chat.Id, 
                             photo: new InputFileStream(memoryStream, path),
-                            caption: StateMachine.CurrentState.SubStates[StateMachine.CurrentState.CurrentSubStateIndex].Message);
-                           
+                            caption: StateMachine.CurrentState.SubStates[StateMachine.CurrentState.CurrentSubStateIndex].Message,
+                            replyMarkup: StateMachine.CurrentState.SubStates[StateMachine.CurrentState.CurrentSubStateIndex].Buttons.GetMarkup()
+                            );
+
                     }
                 }
                     break;

@@ -51,7 +51,7 @@ public static class ImageLibrary
     
     public static MemoryStream GetImage(string path)
     {
-        return new MemoryStream(Images[GetGuid(path)]);
+        return new MemoryStream(File.ReadAllBytes(Path.Combine(PathToImages, path)));
     }
     
     #endregion

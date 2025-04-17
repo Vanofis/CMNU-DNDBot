@@ -121,20 +121,20 @@ public class MessageState
 
 public static class BaseStateExtensions
 {
-    public static InlineKeyboardMarkup GetMarkup(this (string buttonName, string args)[][] buttonNames)
+    public static ReplyKeyboardMarkup GetMarkup(this MessageState.SubState.ButtonData[][] buttonNames)
     {
-        var keyboardButtons = new List<InlineKeyboardButton[]>();
+        var keyboardButtons = new List<KeyboardButton[]>();
         foreach(var array in buttonNames)
         {
-            var buttonArray = new InlineKeyboardButton[array.Length];
+            var buttonArray = new KeyboardButton[array.Length];
             for (int i = 0; i < array.Length; i++)
             {
-                buttonArray[i] = new InlineKeyboardButton(array[i].buttonName, array[i].args);
+                buttonArray[i] = new KeyboardButton(array[i].label);
             }
             
             keyboardButtons.Add(buttonArray);
         }
 
-        return new InlineKeyboardMarkup(keyboardButtons);
+        return new ReplyKeyboardMarkup(keyboardButtons);
     }
 }
